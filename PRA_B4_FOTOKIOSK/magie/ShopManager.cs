@@ -9,6 +9,8 @@ namespace PRA_B4_FOTOKIOSK.magie
         public static List<KioskProduct> Products = new List<KioskProduct>();
         public static Home Instance { get; set; }
 
+        private static List<double> bedragen = new List<double>();
+
         public static void SetShopPriceList(string text)
         {
             Instance.lbPrices.Content = text;
@@ -54,13 +56,17 @@ namespace PRA_B4_FOTOKIOSK.magie
             return null;
         }
 
+        public static int? GetFotoId()
+        {
+            if (int.TryParse(Instance.tbFotoId.Text, out int id))
+                return id;
+            return null;
+        }
+
         public static int? GetAmount()
         {
-            int amount;
-            if (int.TryParse(Instance.tbAmount.Text, out amount))
-            {
+            if (int.TryParse(Instance.tbAmount.Text, out int amount))
                 return amount;
-            }
             return null;
         }
 
@@ -68,16 +74,24 @@ namespace PRA_B4_FOTOKIOSK.magie
         {
             KioskProduct product = GetSelectedProduct();
             int? amount = GetAmount();
+            int? fotoId = GetFotoId();
 
-            if (product == null || amount == null || amount <= 0)
+            if (product == null || amount == null || fotoId == null || amount <= 0)
             {
-                MessageBox.Show("Selecteer een product en vul een geldig aantal in.");
+                MessageBox.Show("Vul een geldig foto-id, selecteer een product en geef een juist aantal op.");
                 return;
             }
 
-            double total = product.Price * amount.Value;
-            string line = $"{product.Name} x {amount} = €{total:F2}\n";
+            double total = (double)product.Price * amount.Value;
+            string line = $"Foto-ID: {fotoId} | {product.Name} x {amount} = €{total:F2}\n";
             AddShopReceipt(line);
+
+            bedragen.Add(total);
+            double som = 0;
+            foreach (var bedrag in bedragen)
+                som += bedrag;
+
+            Instance.lblTotalAmount.Content = $"Totaalbedrag: €{som:F2}";
         }
     }
 }
