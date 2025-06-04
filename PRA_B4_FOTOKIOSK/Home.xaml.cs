@@ -1,22 +1,58 @@
-﻿using PRA_B4_FOTOKIOSK.magie;
+﻿using PRA_B4_FOTOKIOSK.controller;
+using PRA_B4_FOTOKIOSK.magie;
 using PRA_B4_FOTOKIOSK.models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> parent of e85a591 (c1)
+=======
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> parent of e85a591 (c1)
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace PRA_B4_FOTOKIOSK
 {
+    /// <summary>
+    /// Interaction logic for Home.xaml
+    /// </summary>
     public partial class Home : Window
     {
+
+        public ShopController ShopController { get; set; }
+        public PictureController PictureController { get; set; }
+        public SearchController SearchController { get; set; }
+
         public Home()
         {
+            // Bouw de UI
             InitializeComponent();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+>>>>>>> 87f44100343c6c10c8dc91dafea3b37fd1bf240d
             ShopManager.Instance = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             // Voeg producten toe
             ShopManager.Products.Add(new KioskProduct("Foto 10x15", 2.50m));
             ShopManager.Products.Add(new KioskProduct("Foto 13x18", 3.50m));
@@ -31,11 +67,72 @@ namespace PRA_B4_FOTOKIOSK
             {
                 ShopManager.AddShopPriceList($"{product.Name}: €{product.Price:F2}\n");
             }
+=======
+            MessageBox.Show("Refresh button clicked!");
+=======
+
+            // Stel de manager in
+            PictureManager.Instance = this;
+            ShopManager.Instance = this;
+            ShopController.Window = this;
+            PictureController.Window = this;
+            SearchController.Window = this;
+
+            // Maak de controllers
+            ShopController = new ShopController();
+            PictureController = new PictureController();
+            SearchController = new SearchController();
+
+=======
+
+            // Stel de manager in
+            PictureManager.Instance = this;
+            ShopManager.Instance = this;
+            ShopController.Window = this;
+            PictureController.Window = this;
+            SearchController.Window = this;
+
+            // Maak de controllers
+            ShopController = new ShopController();
+            PictureController = new PictureController();
+            SearchController = new SearchController();
+
+>>>>>>> parent of e85a591 (c1)
+            // Start de paginas
+            PictureController.Start();
+            ShopController.Start();
+            SearchController.Start();
+<<<<<<< HEAD
+>>>>>>> parent of e85a591 (c1)
+=======
+>>>>>>> parent of e85a591 (c1)
+>>>>>>> 87f44100343c6c10c8dc91dafea3b37fd1bf240d
         }
 
         private void btnShopAdd_Click(object sender, RoutedEventArgs e)
         {
-            ShopManager.AddToReceipt();
+            ShopController.AddButtonClick();
+        }
+
+        private void btnShopReset_Click(object sender, RoutedEventArgs e)
+        {
+            ShopController.ResetButtonClick();
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            PictureController.RefreshButtonClick();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            ShopController.SaveButtonClick();
+        }
+
+        private void btnZoeken_Click(object sender, RoutedEventArgs e)
+        {
+            SearchController.SearchButtonClick();
+<<<<<<< HEAD
         }
 
         private void btnShopReset_Click(object sender, RoutedEventArgs e)
@@ -90,8 +187,12 @@ namespace PRA_B4_FOTOKIOSK
             // Eventueel hier productzoekfunctionaliteit implementeren
             // Bijvoorbeeld producten filteren op naam of categorie
 =======
+<<<<<<< HEAD
             tbAmount.Text = "";
 >>>>>>> parent of c211cca (c1 verbeterd)
+=======
+>>>>>>> parent of e85a591 (c1)
+>>>>>>> 87f44100343c6c10c8dc91dafea3b37fd1bf240d
         }
     }
 }
