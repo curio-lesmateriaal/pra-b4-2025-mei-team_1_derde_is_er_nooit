@@ -14,43 +14,46 @@ namespace PRA_B4_FOTOKIOSK.controller
         // De window die we laten zien op het scherm
         public static Home Window { get; set; }
 
-
         // De lijst met fotos die we laten zien
         public List<KioskPhoto> PicturesToDisplay = new List<KioskPhoto>();
-        
-        
+
         // Start methode die wordt aangeroepen wanneer de foto pagina opent.
         public void Start()
         {
+            PicturesToDisplay.Clear();
 
-            // Initializeer de lijst met fotos
-            // WAARSCHUWING. ZONDER FILTER LAADT DIT ALLES!
-            // foreach is een for-loop die door een array loopt
+            var now = DateTime.Now;
+            int todayNumber = (int)now.DayOfWeek; // 0=Zondag, 1=Maandag, ..., 6=Zaterdag
+
             foreach (string dir in Directory.GetDirectories(@"../../../fotos"))
             {
-                /**
-                 * dir string is de map waar de fotos in staan. Bijvoorbeeld:
-                 * \fotos\0_Zondag
-                 */
-                foreach (string file in Directory.GetFiles(dir))
+                string folderName = new DirectoryInfo(dir).Name; // bv. "2_Dinsdag"
+                string[] parts = folderName.Split('_');
+
+                if (parts.Length > 0 && int.TryParse(parts[0], out int folderDayNumber))
                 {
-                    /**
-                     * file string is de file van de foto. Bijvoorbeeld:
-                     * \fotos\0_Zondag\10_05_30_id8824.jpg
-                     */
-                    PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
+                    if (folderDayNumber == todayNumber)
+                    {
+                        foreach (string file in Directory.GetFiles(dir))
+                        {
+                            PicturesToDisplay.Add(new KioskPhoto()
+                            {
+                                Id = PicturesToDisplay.Count,
+                                Source = file
+                            });
+                        }
+                    }
                 }
             }
 
-            // Update de fotos
             PictureManager.UpdatePictures(PicturesToDisplay);
         }
 
         // Wordt uitgevoerd wanneer er op de Refresh knop is geklikt
         public void RefreshButtonClick()
         {
-
+            // Zelfde logica als Start(), want bij refresh willen we opnieuw alle foto's van vandaag laden
+            Start();
         }
-
     }
 }
