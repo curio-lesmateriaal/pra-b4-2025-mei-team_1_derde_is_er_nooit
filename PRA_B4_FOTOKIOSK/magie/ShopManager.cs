@@ -1,20 +1,10 @@
 ﻿using PRA_B4_FOTOKIOSK.models;
 using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
-<<<<<<< HEAD
-using System.Globalization;
-=======
-=======
->>>>>>> parent of e85a591 (c1)
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-<<<<<<< HEAD
->>>>>>> parent of e85a591 (c1)
-=======
->>>>>>> parent of e85a591 (c1)
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -24,10 +14,8 @@ namespace PRA_B4_FOTOKIOSK.magie
     public class ShopManager
     {
 
-        public static List<KioskProduct> Products = new List<KioskProduct>();    
+        public static List<KioskProduct> Products = new List<KioskProduct>();
         public static Home Instance { get; set; }
-
-        private static decimal totaalBedrag = 0;
 
         public static void SetShopPriceList(string text)
         {
@@ -75,13 +63,6 @@ namespace PRA_B4_FOTOKIOSK.magie
         }
 
         public static int? GetFotoId()
-<<<<<<< HEAD
-<<<<<<< HEAD
-        {
-            if (int.TryParse(Instance.tbFotoId.Text, out int id))
-                return id;
-            return null;
-=======
         {
             int? id = null;
             int amount = -1;
@@ -90,53 +71,10 @@ namespace PRA_B4_FOTOKIOSK.magie
                 id = amount;
             }
             return id;
->>>>>>> parent of e85a591 (c1)
         }
 
         public static int? GetAmount()
         {
-<<<<<<< HEAD
-            if (int.TryParse(Instance.tbAmount.Text, out int amount))
-                return amount;
-            return null;
-=======
-        {
-            int? id = null;
-            int amount = -1;
-            if (int.TryParse(Instance.tbFotoId.Text, out amount))
-            {
-                id = amount;
-            }
-            return id;
->>>>>>> parent of e85a591 (c1)
-        }
-
-        public static int? GetAmount()
-        {
-<<<<<<< HEAD
-            KioskProduct product = GetSelectedProduct();
-            int? amount = GetAmount();
-            int? fotoId = GetFotoId();
-
-            if (product == null || amount == null || fotoId == null || amount <= 0)
-            {
-                MessageBox.Show("Vul een geldig foto-id, selecteer een product en geef een juist aantal op.");
-                return;
-            }
-
-            decimal lineTotal = product.Price * amount.Value;
-            totaalBedrag += lineTotal;
-
-            string line = $"Foto-ID: {fotoId} | {product.Name} x {amount} = €{lineTotal:F2}\n";
-            AddShopReceipt(line);
-
-            Instance.lblTotalAmount.Content = $"Totaalbedrag: €{totaalBedrag:F2}";
-        }
-
-        public static void ResetTotaalBedrag()
-        {
-            totaalBedrag = 0;
-=======
             int? id = null;
             int amount = -1;
             if (int.TryParse(Instance.tbAmount.Text, out amount))
@@ -144,16 +82,6 @@ namespace PRA_B4_FOTOKIOSK.magie
                 id = amount;
             }
             return id;
->>>>>>> parent of e85a591 (c1)
-=======
-            int? id = null;
-            int amount = -1;
-            if (int.TryParse(Instance.tbAmount.Text, out amount))
-            {
-                id = amount;
-            }
-            return id;
->>>>>>> parent of e85a591 (c1)
         }
     }
 }
