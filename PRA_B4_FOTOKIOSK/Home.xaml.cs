@@ -12,23 +12,25 @@ namespace PRA_B4_FOTOKIOSK
         public Home()
         {
             InitializeComponent();
-
             ShopManager.Instance = this;
-
-            // Vul de productenlijst
-            ShopManager.Products.Add(new KioskProduct { Name = "Foto afdruk 10x15", Price = 0.50m });
-            ShopManager.Products.Add(new KioskProduct { Name = "Foto afdruk 13x18", Price = 1.00m });
-            ShopManager.Products.Add(new KioskProduct { Name = "Fotoboek", Price = 15.00m });
-            ShopManager.Products.Add(new KioskProduct { Name = "Canvas print", Price = 25.00m });
-            ShopManager.Products.Add(new KioskProduct { Name = "Mok met foto", Price = 8.50m });
-            ShopManager.Products.Add(new KioskProduct { Name = "T-shirt met foto", Price = 12.99m });
-
-            ShopManager.UpdateDropDownProducts();
         }
 
-        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Refresh button clicked!");
+            // Voeg producten toe
+            ShopManager.Products.Add(new KioskProduct("Foto 10x15", 2.50m));
+            ShopManager.Products.Add(new KioskProduct("Foto 13x18", 3.50m));
+            ShopManager.Products.Add(new KioskProduct("Poster A3", 5.00m));
+
+            // Vul dropdown
+            ShopManager.UpdateDropDownProducts();
+
+            // Toon prijslijst
+            ShopManager.SetShopPriceList("Prijslijst:\n");
+            foreach (var product in ShopManager.Products)
+            {
+                ShopManager.AddShopPriceList($"{product.Name}: €{product.Price:F2}\n");
+            }
         }
 
         private void btnShopAdd_Click(object sender, RoutedEventArgs e)
@@ -39,8 +41,8 @@ namespace PRA_B4_FOTOKIOSK
         private void btnShopReset_Click(object sender, RoutedEventArgs e)
         {
             tbFotoId.Text = "";
-            tbAmount.Text = "";
             cbProducts.SelectedIndex = -1;
+<<<<<<< HEAD
             ShopManager.SetShopReceipt("");
             ShopManager.ResetTotaalBedrag();
             lblTotalAmount.Content = "Totaalbedrag: €0,00";
@@ -87,6 +89,9 @@ namespace PRA_B4_FOTOKIOSK
 
             // Eventueel hier productzoekfunctionaliteit implementeren
             // Bijvoorbeeld producten filteren op naam of categorie
+=======
+            tbAmount.Text = "";
+>>>>>>> parent of c211cca (c1 verbeterd)
         }
     }
 }

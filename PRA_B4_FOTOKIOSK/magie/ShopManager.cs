@@ -1,6 +1,5 @@
 ﻿using PRA_B4_FOTOKIOSK.models;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Windows;
 
 namespace PRA_B4_FOTOKIOSK.magie
@@ -10,7 +9,7 @@ namespace PRA_B4_FOTOKIOSK.magie
         public static List<KioskProduct> Products = new List<KioskProduct>();
         public static Home Instance { get; set; }
 
-        private static decimal totaalBedrag = 0;
+        private static List<double> bedragen = new List<double>();
 
         public static void SetShopPriceList(string text)
         {
@@ -83,18 +82,16 @@ namespace PRA_B4_FOTOKIOSK.magie
                 return;
             }
 
-            decimal lineTotal = product.Price * amount.Value;
-            totaalBedrag += lineTotal;
-
-            string line = $"Foto-ID: {fotoId} | {product.Name} x {amount} = €{lineTotal:F2}\n";
+            double total = (double)product.Price * amount.Value;
+            string line = $"Foto-ID: {fotoId} | {product.Name} x {amount} = €{total:F2}\n";
             AddShopReceipt(line);
 
-            Instance.lblTotalAmount.Content = $"Totaalbedrag: €{totaalBedrag:F2}";
-        }
+            bedragen.Add(total);
+            double som = 0;
+            foreach (var bedrag in bedragen)
+                som += bedrag;
 
-        public static void ResetTotaalBedrag()
-        {
-            totaalBedrag = 0;
+            Instance.lblTotalAmount.Content = $"Totaalbedrag: €{som:F2}";
         }
     }
 }
