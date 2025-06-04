@@ -2,12 +2,18 @@
 using System;
 using System.Collections.Generic;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using System.Globalization;
 =======
+=======
+>>>>>>> parent of e85a591 (c1)
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
+>>>>>>> parent of e85a591 (c1)
+=======
 >>>>>>> parent of e85a591 (c1)
 using System.Windows;
 using System.Windows.Controls;
@@ -70,14 +76,26 @@ namespace PRA_B4_FOTOKIOSK.magie
 
         public static int? GetFotoId()
 <<<<<<< HEAD
+<<<<<<< HEAD
         {
             if (int.TryParse(Instance.tbFotoId.Text, out int id))
                 return id;
             return null;
+=======
+        {
+            int? id = null;
+            int amount = -1;
+            if (int.TryParse(Instance.tbFotoId.Text, out amount))
+            {
+                id = amount;
+            }
+            return id;
+>>>>>>> parent of e85a591 (c1)
         }
 
         public static int? GetAmount()
         {
+<<<<<<< HEAD
             if (int.TryParse(Instance.tbAmount.Text, out int amount))
                 return amount;
             return null;
@@ -118,6 +136,15 @@ namespace PRA_B4_FOTOKIOSK.magie
         public static void ResetTotaalBedrag()
         {
             totaalBedrag = 0;
+=======
+            int? id = null;
+            int amount = -1;
+            if (int.TryParse(Instance.tbAmount.Text, out amount))
+            {
+                id = amount;
+            }
+            return id;
+>>>>>>> parent of e85a591 (c1)
 =======
             int? id = null;
             int amount = -1;
