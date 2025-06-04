@@ -11,36 +11,47 @@ namespace PRA_B4_FOTOKIOSK.controller
 {
     public class PictureController
     {
-        // De window die we laten zien op het scherm
         public static Home Window { get; set; }
-
-        // De lijst met fotos die we laten zien
         public List<KioskPhoto> PicturesToDisplay = new List<KioskPhoto>();
 
-        // Start methode die wordt aangeroepen wanneer de foto pagina opent.
         public void Start()
         {
             PicturesToDisplay.Clear();
 
             var now = DateTime.Now;
-            int todayNumber = (int)now.DayOfWeek; // 0=Zondag, 1=Maandag, ..., 6=Zaterdag
+            int todayNumber = (int)now.DayOfWeek;
+
+            DateTime bovenGrens = now.AddMinutes(-2);
+            DateTime onderGrens = now.AddMinutes(-30);
 
             foreach (string dir in Directory.GetDirectories(@"../../../fotos"))
             {
-                string folderName = new DirectoryInfo(dir).Name; // bv. "2_Dinsdag"
+                string folderName = new DirectoryInfo(dir).Name;
                 string[] parts = folderName.Split('_');
 
-                if (parts.Length > 0 && int.TryParse(parts[0], out int folderDayNumber))
+                if (parts.Length > 0 && int.TryParse(parts[0], out int folderDayNumber) && folderDayNumber == todayNumber)
                 {
-                    if (folderDayNumber == todayNumber)
+                    foreach (string file in Directory.GetFiles(dir))
                     {
-                        foreach (string file in Directory.GetFiles(dir))
+                        string fileName = Path.GetFileNameWithoutExtension(file); // bv. "13_37_10_id1"
+                        string[] nameParts = fileName.Split(new[] { "_id" }, StringSplitOptions.None);
+
+                        if (nameParts.Length == 2)
                         {
-                            PicturesToDisplay.Add(new KioskPhoto()
+                            string tijdString = nameParts[0].Replace("_", ":"); // "13:37:10"
+                            if (TimeSpan.TryParse(tijdString, out TimeSpan tijd))
                             {
-                                Id = PicturesToDisplay.Count,
-                                Source = file
-                            });
+                                DateTime fotoTijd = now.Date + tijd;
+
+                                if (fotoTijd >= onderGrens && fotoTijd <= bovenGrens)
+                                {
+                                    PicturesToDisplay.Add(new KioskPhoto()
+                                    {
+                                        Id = PicturesToDisplay.Count,
+                                        Source = file
+                                    });
+                                }
+                            }
                         }
                     }
                 }
@@ -49,10 +60,8 @@ namespace PRA_B4_FOTOKIOSK.controller
             PictureManager.UpdatePictures(PicturesToDisplay);
         }
 
-        // Wordt uitgevoerd wanneer er op de Refresh knop is geklikt
         public void RefreshButtonClick()
         {
-            // Zelfde logica als Start(), want bij refresh willen we opnieuw alle foto's van vandaag laden
             Start();
         }
     }
