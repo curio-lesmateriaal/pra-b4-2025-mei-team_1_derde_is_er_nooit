@@ -83,7 +83,8 @@ namespace PRA_B4_FOTOKIOSK.controller
             string receipt = ShopManager.GetShopReceipt();
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Bon.txt");
             File.WriteAllText(path, receipt);
-            ShopManager.AddShopReceipt("\nBon opgeslagen op Bureaublad.");
+            if (Window != null) Window.lbSearchInfo.Content = "Bon is nu opgeslagen op je bureaublad.";
+
         }
     }
 }
