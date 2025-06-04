@@ -1,13 +1,24 @@
 ﻿using PRA_B4_FOTOKIOSK.models;
+using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Globalization;
+=======
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+>>>>>>> parent of e85a591 (c1)
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace PRA_B4_FOTOKIOSK.magie
 {
     public class ShopManager
     {
-        public static List<KioskProduct> Products = new List<KioskProduct>();
+
+        public static List<KioskProduct> Products = new List<KioskProduct>();    
         public static Home Instance { get; set; }
 
         private static decimal totaalBedrag = 0;
@@ -19,7 +30,7 @@ namespace PRA_B4_FOTOKIOSK.magie
 
         public static void AddShopPriceList(string text)
         {
-            Instance.lbPrices.Content += text;
+            Instance.lbPrices.Content = Instance.lbPrices.Content + text;
         }
 
         public static void SetShopReceipt(string text)
@@ -40,9 +51,9 @@ namespace PRA_B4_FOTOKIOSK.magie
         public static void UpdateDropDownProducts()
         {
             Instance.cbProducts.Items.Clear();
-            foreach (KioskProduct product in Products)
+            foreach (KioskProduct item in Products)
             {
-                Instance.cbProducts.Items.Add(product.Name);
+                Instance.cbProducts.Items.Add(item.Name);
             }
         }
 
@@ -58,6 +69,7 @@ namespace PRA_B4_FOTOKIOSK.magie
         }
 
         public static int? GetFotoId()
+<<<<<<< HEAD
         {
             if (int.TryParse(Instance.tbFotoId.Text, out int id))
                 return id;
@@ -69,10 +81,21 @@ namespace PRA_B4_FOTOKIOSK.magie
             if (int.TryParse(Instance.tbAmount.Text, out int amount))
                 return amount;
             return null;
+=======
+        {
+            int? id = null;
+            int amount = -1;
+            if (int.TryParse(Instance.tbFotoId.Text, out amount))
+            {
+                id = amount;
+            }
+            return id;
+>>>>>>> parent of e85a591 (c1)
         }
 
-        public static void AddToReceipt()
+        public static int? GetAmount()
         {
+<<<<<<< HEAD
             KioskProduct product = GetSelectedProduct();
             int? amount = GetAmount();
             int? fotoId = GetFotoId();
@@ -95,6 +118,15 @@ namespace PRA_B4_FOTOKIOSK.magie
         public static void ResetTotaalBedrag()
         {
             totaalBedrag = 0;
+=======
+            int? id = null;
+            int amount = -1;
+            if (int.TryParse(Instance.tbAmount.Text, out amount))
+            {
+                id = amount;
+            }
+            return id;
+>>>>>>> parent of e85a591 (c1)
         }
     }
 }
