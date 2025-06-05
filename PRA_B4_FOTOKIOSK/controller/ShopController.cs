@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace PRA_B4_FOTOKIOSK.controller
 {
@@ -81,9 +82,9 @@ namespace PRA_B4_FOTOKIOSK.controller
         public void SaveButtonClick()
         {
             string receipt = ShopManager.GetShopReceipt();
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Bon.txt");
-            File.WriteAllText(path, receipt);
-            if (Window != null) Window.lbSearchInfo.Content = "Bon is nu opgeslagen op je bureaublad.";
+            string filePath = "receipt.txt";
+            File.WriteAllText(filePath, receipt);
+            MessageBox.Show($"Bon opgeslagen naar {filePath}");
 
         }
     }
